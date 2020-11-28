@@ -8,10 +8,12 @@ import (
 )
 
 var (
-	testClusterRKEConfigDNSNodelocalConf      *managementClient.Nodelocal
-	testClusterRKEConfigDNSNodelocalInterface []interface{}
-	testClusterRKEConfigDNSConf               *managementClient.DNSConfig
-	testClusterRKEConfigDNSInterface          []interface{}
+	testClusterRKEConfigDNSNodelocalConf                   *managementClient.Nodelocal
+	testClusterRKEConfigDNSLinearAutoscalerParamsConf      *managementClient.LinearAutoscalerParams
+	testClusterRKEConfigDNSNodelocalInterface              []interface{}
+	testClusterRKEConfigDNSLinearAutoscalerParamsInterface []interface{}
+	testClusterRKEConfigDNSConf                            *managementClient.DNSConfig
+	testClusterRKEConfigDNSInterface                       []interface{}
 )
 
 func init() {
@@ -22,6 +24,13 @@ func init() {
 		},
 		IPAddress: "ip_address",
 	}
+	testClusterRKEConfigDNSLinearAutoscalerParamsConf = &managementClient.LinearAutoscalerParams{
+		CoresPerReplica:           128,
+		Max:                       0,
+		Min:                       1,
+		NodesPerReplica:           4,
+		PreventSinglePointFailure: true,
+	}
 	testClusterRKEConfigDNSNodelocalInterface = []interface{}{
 		map[string]interface{}{
 			"node_selector": map[string]interface{}{
@@ -31,15 +40,25 @@ func init() {
 			"ip_address": "ip_address",
 		},
 	}
+	testClusterRKEConfigDNSLinearAutoscalerParamsInterface = []interface{}{
+		map[string]interface{}{
+			"cores_per_replica":            128,
+			"max":                          0,
+			"min":                          1,
+			"nodes_per_replica":            4,
+			"prevent_single_point_failure": true,
+		},
+	}
 	testClusterRKEConfigDNSConf = &managementClient.DNSConfig{
 		NodeSelector: map[string]string{
 			"sel1": "value1",
 			"sel2": "value2",
 		},
-		Nodelocal:           testClusterRKEConfigDNSNodelocalConf,
-		Provider:            "kube-dns",
-		ReverseCIDRs:        []string{"rev1", "rev2"},
-		UpstreamNameservers: []string{"up1", "up2"},
+		Nodelocal:              testClusterRKEConfigDNSNodelocalConf,
+		LinearAutoscalerParams: testClusterRKEConfigDNSLinearAutoscalerParamsConf,
+		Provider:               "kube-dns",
+		ReverseCIDRs:           []string{"rev1", "rev2"},
+		UpstreamNameservers:    []string{"up1", "up2"},
 	}
 	testClusterRKEConfigDNSInterface = []interface{}{
 		map[string]interface{}{
@@ -47,10 +66,11 @@ func init() {
 				"sel1": "value1",
 				"sel2": "value2",
 			},
-			"nodelocal":            testClusterRKEConfigDNSNodelocalInterface,
-			"provider":             "kube-dns",
-			"reverse_cidrs":        []interface{}{"rev1", "rev2"},
-			"upstream_nameservers": []interface{}{"up1", "up2"},
+			"nodelocal":                testClusterRKEConfigDNSNodelocalInterface,
+			"linear_autoscaler_params": testClusterRKEConfigDNSLinearAutoscalerParamsInterface,
+			"provider":                 "kube-dns",
+			"reverse_cidrs":            []interface{}{"rev1", "rev2"},
+			"upstream_nameservers":     []interface{}{"up1", "up2"},
 		},
 	}
 }

@@ -35,11 +35,11 @@ func clusterRKEConfigDNSNodelocalFields() map[string]*schema.Schema {
 func clusterRKEConfigDNSLinearAutoscalerParamsFields() map[string]*schema.Schema {
 	s := map[string]*schema.Schema{
 		"cores_per_replica": {
-			Type:     schema.TypeInt,
+			Type:     schema.TypeFloat,
 			Optional: true,
 		},
 		"nodes_per_replica": {
-			Type:     schema.TypeInt,
+			Type:     schema.TypeFloat,
 			Optional: true,
 		},
 		"prevent_single_point_failure": {

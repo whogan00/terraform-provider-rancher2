@@ -29,13 +29,23 @@ func flattenClusterRKEConfigDNSLinearAutoscalerParams(in *managementClient.Linea
 		return nil
 	}
 
-	if len(in.IPAddress) > 0 {
-		obj["ip_address"] = in.IPAddress
+	if in.CoresPerReplica > 0 {
+		obj["cores_per_replica"] = in.CoresPerReplica
 	}
 
-	if len(in.NodeSelector) > 0 {
-		obj["node_selector"] = toMapInterface(in.NodeSelector)
+	if in.NodesPerReplica > 0 {
+		obj["nodes_per_replica"] = in.NodesPerReplica
 	}
+
+	if in.Max > 0 {
+		obj["max"] = in.Max
+	}
+
+	if in.Min > 0 {
+		obj["min"] = in.Min
+	}
+
+	obj["prevent_single_point_failure"] = in.PreventSinglePointFailure
 
 	return []interface{}{obj}
 }
@@ -52,6 +62,10 @@ func flattenClusterRKEConfigDNS(in *managementClient.DNSConfig) ([]interface{}, 
 
 	if in.Nodelocal != nil {
 		obj["nodelocal"] = flattenClusterRKEConfigDNSNodelocal(in.Nodelocal)
+	}
+
+	if in.LinearAutoscalerParams != nil {
+		obj["linear_autoscaler_params"] = flattenClusterRKEConfigDNSLinearAutoscalerParams(in.LinearAutoscalerParams)
 	}
 
 	if len(in.Provider) > 0 {
@@ -103,6 +117,19 @@ func expandClusterRKEConfigDNSLinearAutoscalerParams(p []interface{}) *managemen
 	if v, ok := in["nodes_per_replica"].(float64); ok && v > 0 {
 		obj.NodesPerReplica = v
 	}
+
+	if v, ok := in["max"].(int); ok && v > 0 {
+		obj.Max = int64(v)
+	}
+
+	if v, ok := in["min"].(int); ok && v > 0 {
+		obj.Min = int64(v)
+	}
+
+	if v, ok := in["prevent_single_point_failure"].(bool); ok {
+		obj.PreventSinglePointFailure = v
+	}
+
 	return obj
 }
 
