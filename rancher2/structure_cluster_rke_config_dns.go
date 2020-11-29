@@ -37,7 +37,7 @@ func flattenClusterRKEConfigDNSLinearAutoscalerParams(in *managementClient.Linea
 		obj["nodes_per_replica"] = in.NodesPerReplica
 	}
 
-	if in.Max > 0 {
+	if in.Max >= 0 {
 		obj["max"] = in.Max
 	}
 
@@ -118,7 +118,7 @@ func expandClusterRKEConfigDNSLinearAutoscalerParams(p []interface{}) *managemen
 		obj.NodesPerReplica = v
 	}
 
-	if v, ok := in["max"].(int); ok && v > 0 {
+	if v, ok := in["max"].(int); ok && v >= 0 {
 		obj.Max = int64(v)
 	}
 

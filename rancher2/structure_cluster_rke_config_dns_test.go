@@ -96,6 +96,27 @@ func TestFlattenClusterRKEConfigDNSNodelocal(t *testing.T) {
 	}
 }
 
+func TestFlattenClusterRKEConfigDNSLinearAutoscalerParams(t *testing.T) {
+
+	cases := []struct {
+		Input          *managementClient.LinearAutoscalerParams
+		ExpectedOutput []interface{}
+	}{
+		{
+			testClusterRKEConfigDNSLinearAutoscalerParamsConf,
+			testClusterRKEConfigDNSLinearAutoscalerParamsInterface,
+		},
+	}
+
+	for _, tc := range cases {
+		output := flattenClusterRKEConfigDNSLinearAutoscalerParams(tc.Input)
+		if !reflect.DeepEqual(output, tc.ExpectedOutput) {
+			t.Fatalf("Unexpected output from flattener.\nExpected: %#v\nGiven:    %#v",
+				tc.ExpectedOutput, output)
+		}
+	}
+}
+
 func TestFlattenClusterRKEConfigDNS(t *testing.T) {
 
 	cases := []struct {
@@ -134,6 +155,27 @@ func TestExpandClusterRKEConfigDNSNodelocal(t *testing.T) {
 
 	for _, tc := range cases {
 		output := expandClusterRKEConfigDNSNodelocal(tc.Input)
+		if !reflect.DeepEqual(output, tc.ExpectedOutput) {
+			t.Fatalf("Unexpected output from expander.\nExpected: %#v\nGiven:    %#v",
+				tc.ExpectedOutput, output)
+		}
+	}
+}
+
+func TestExpandClusterRKEConfigDNSLinearAutoscalerParams(t *testing.T) {
+
+	cases := []struct {
+		Input          []interface{}
+		ExpectedOutput *managementClient.LinearAutoscalerParams
+	}{
+		{
+			testClusterRKEConfigDNSLinearAutoscalerParamsInterface,
+			testClusterRKEConfigDNSLinearAutoscalerParamsConf,
+		},
+	}
+
+	for _, tc := range cases {
+		output := expandClusterRKEConfigDNSLinearAutoscalerParams(tc.Input)
 		if !reflect.DeepEqual(output, tc.ExpectedOutput) {
 			t.Fatalf("Unexpected output from expander.\nExpected: %#v\nGiven:    %#v",
 				tc.ExpectedOutput, output)
