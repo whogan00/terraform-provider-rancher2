@@ -25,10 +25,10 @@ func init() {
 		IPAddress: "ip_address",
 	}
 	testClusterRKEConfigDNSLinearAutoscalerParamsConf = &managementClient.LinearAutoscalerParams{
-		CoresPerReplica:           128,
-		Max:                       0,
-		Min:                       1,
-		NodesPerReplica:           4,
+		CoresPerReplica:           float64(128),
+		Max:                       int64(0),
+		Min:                       int64(1),
+		NodesPerReplica:           float64(4),
 		PreventSinglePointFailure: true,
 	}
 	testClusterRKEConfigDNSNodelocalInterface = []interface{}{
@@ -42,10 +42,10 @@ func init() {
 	}
 	testClusterRKEConfigDNSLinearAutoscalerParamsInterface = []interface{}{
 		map[string]interface{}{
-			"cores_per_replica":            128,
+			"cores_per_replica":            float64(128),
 			"max":                          0,
 			"min":                          1,
-			"nodes_per_replica":            4,
+			"nodes_per_replica":            float64(4),
 			"prevent_single_point_failure": true,
 		},
 	}
