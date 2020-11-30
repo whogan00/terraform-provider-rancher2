@@ -38,11 +38,11 @@ func flattenClusterRKEConfigDNSLinearAutoscalerParams(in *managementClient.Linea
 	}
 
 	if in.Max >= 0 {
-		obj["max"] = in.Max
+		obj["max"] = int(in.Max)
 	}
 
 	if in.Min > 0 {
-		obj["min"] = in.Min
+		obj["min"] = int(in.Min)
 	}
 
 	obj["prevent_single_point_failure"] = in.PreventSinglePointFailure
